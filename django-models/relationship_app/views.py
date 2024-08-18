@@ -1,7 +1,7 @@
 # relationship_app/views.py
 
 from django.shortcuts import render
-from .models import Book, Library
+from .models import Library, Book
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
