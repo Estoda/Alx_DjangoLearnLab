@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-def book_list_view(request):
+def list_books(request):
     books = Book.objects.all()  # Query to get all books
     context = {
         'books': books,
