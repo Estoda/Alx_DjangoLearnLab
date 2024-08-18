@@ -1,6 +1,6 @@
 # relationship_app/views.py
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Library, Book
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
@@ -30,7 +30,14 @@ class LibraryDetailView(DetailView):
         context['books'] = books
         return context
     
-class register(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy
-    template_name = 'relationship_app/register.html'
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Automatically log in the user after registration
+            return redirect(reverse_lazy('login'))  # Redirect to the login page
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'relationship_app/register.html', {'form': form})
