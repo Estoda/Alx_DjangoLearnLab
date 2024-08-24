@@ -9,3 +9,17 @@ from .models import Book
 def book_list(request):
     books = Book.objects.all()
     return render(request, 'bookshelf/book_list.html', {'books': books})
+
+from django.shortcuts import render
+from .forms import ExampleForm
+
+def example_form_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the form data
+            return render(request, 'bookshelf/form_success.html')
+    else:
+        form = ExampleForm()
+
+    return render(request, 'bookshelf/example_form.html', {'form': form})
