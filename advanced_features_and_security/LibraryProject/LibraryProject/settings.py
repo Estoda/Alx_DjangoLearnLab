@@ -140,3 +140,25 @@ CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com',)
 CSP_SCRIPT_SRC = ("'self'", 'https://ajax.googleapis.com',)
 
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # One year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Secure cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+
+# Prevent clickjacking
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent content type sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable the browser's XSS filter
+SECURE_BROWSER_XSS_FILTER = True
+
