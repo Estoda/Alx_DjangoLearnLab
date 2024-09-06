@@ -44,3 +44,14 @@ This project demonstrates the implementation of a REST API using Django REST Fra
   - Example: `/books/?search=Python`
 - **Ordering**: You can order books by `title` or `publication_year`.
   - Example: `/books/?ordering=title`
+
+
+## Testing
+We have implemented unit tests for the following scenarios:
+- **CRUD Operations**: Tested creation, retrieval, updating, and deletion of Books.
+- **Filtering, Searching, and Ordering**: Verified these functionalities work as expected.
+- **Authentication/Permissions**: Ensured proper access control.
+
+To run the tests:
+```bash
+python manage.py test api
