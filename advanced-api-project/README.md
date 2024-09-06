@@ -35,3 +35,12 @@ This project demonstrates the implementation of a REST API using Django REST Fra
     "author": "Author Name",
     "published_date": "2024-01-01"
   }
+
+
+## API Features
+- **Filtering**: You can filter books by `title`, `author`, and `publication_year`.
+  - Example: `/books/?author__name=John`
+- **Search**: You can search for books by `title` or `author`.
+  - Example: `/books/?search=Python`
+- **Ordering**: You can order books by `title` or `publication_year`.
+  - Example: `/books/?ordering=title`
