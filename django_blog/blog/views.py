@@ -17,4 +17,7 @@ def register(request):
 
 def profile(request):
     return render(request, 'blog/profile.html')
-    
+
+def HomeView(request):
+    return render(request, '/root/ComplateProject/myenv/Alx_DjangoLearnLab/django_blog/blog/templates/blog/base.html')
+
