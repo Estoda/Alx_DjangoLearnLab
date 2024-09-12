@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import UserProfile, Post, Comment
+from .models import UserProfile, Post, Comment, Tag
 
 class CustomerUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -16,9 +16,11 @@ class UserProfileForm(forms.ModelForm):
         fields = ['profile_pics']
 
 class PostForm(forms.ModelForm):
+    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False)
+
     class Meta:
         model = Post
-        fields = ['title', 'content']
+        fields = ['title', 'content', 'tags']
 
 
 class CommentForm(forms.ModelForm):

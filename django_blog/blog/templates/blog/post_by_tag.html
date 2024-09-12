@@ -1,0 +1,11 @@
+<!-- blog/templates/blog/post_by_tag.html -->
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Posts tagged with "{{ tag.name }}"</h2>
+    {% for post in posts %}
+        <h3><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h3>
+        <p>{{ post.content|truncatewords:30 }}</p>
+    {% empty %}
+        <p>No posts found for this tag.</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,11 @@
+<!-- blog/templates/blog/search_results.html -->
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Search Results</h2>
+    {% for post in results %}
+        <h3><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h3>
+        <p>{{ post.content|truncatewords:30 }}</p>
+    {% empty %}
+        <p>No posts found.</p>
+    {% endfor %}
+{% endblock %}

@@ -6,3 +6,9 @@
         </li>
     {% endfor %}
 </ul>
+
+<p>Tags:
+   {% for tag in post.tags.all %}
+       <a href="{% url 'post_by_tag' tag.name %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+   {% endfor %}
+</p>
