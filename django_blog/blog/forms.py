@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import UserProfile, Post, Comment, Tag
+from django import forms
+from .models import Post
+from taggit.forms import TagWidget  
 
 class CustomerUserCreationForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -16,11 +19,14 @@ class UserProfileForm(forms.ModelForm):
         fields = ['profile_pics']
 
 class PostForm(forms.ModelForm):
-    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False)
+   
 
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': TagWidget(),
+        }
 
 
 class CommentForm(forms.ModelForm):
