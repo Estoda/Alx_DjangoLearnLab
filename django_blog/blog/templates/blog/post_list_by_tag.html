@@ -1,0 +1,23 @@
+<!-- blog/templates/blog/post_list_by_tag.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Posts tagged with "{{ tag.name }}"</h1>
+  <ul>
+    {% for post in posts %}
+      <li>
+        <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a> - {{ post.created_at }}
+      </li>
+    {% empty %}
+      <li>No posts available with this tag.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Add pagination if necessary -->
+  <div>
+    {% if is_paginated %}
+      <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+    {% endif %}
+  </div>
+
+{% endblock %}

@@ -19,9 +19,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ['profile_pics']
 
 class PostForm(forms.ModelForm):
-   
-
-    class Meta:
+       class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
         widgets = {
