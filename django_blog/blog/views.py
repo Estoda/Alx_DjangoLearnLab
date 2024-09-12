@@ -1,10 +1,10 @@
-from django.shortcuts import render, redirect, get_list_or_404
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from .forms import CustomerUserCreationForm
+from .forms import CustomerUserCreationForm, CommentForm
 from django.urls import reverse_lazy
-from .models import Post
+from .models import Post, Comment
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -71,6 +71,26 @@ class PostDeleteView(DeleteView):
         return self.request.user == post.author
 
 
+def PostCommentsView(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    comments = post.comments.all()
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.author = request.user
+            new_comment.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        comment_form = CommentForm
+
+    context = {
+        'post': post,
+        'comment': comments,
+        'comment_form': comment_form
+    }
+    return render(request, 'blog/post_comments.html', context)
 
 
 
