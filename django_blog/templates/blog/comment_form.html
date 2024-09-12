@@ -1,0 +1,6 @@
+<h2>{{ view.object.title if view.object else 'Add Comment' }}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -92,7 +92,34 @@ def PostCommentsView(request, pk):
     }
     return render(request, 'blog/post_comments.html', context)
 
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
 
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        return reverse_lazy('post-comments', kwargs={'pk': self.kwargs['pk']})
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/comment_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('post-comments', kwargs={'pk': self.object.post.pk})
+    
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = 'blog/comment_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('post-comments', kwargs={'pk': self.object.post.pk})
+        
 
 
 
