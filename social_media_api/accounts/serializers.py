@@ -6,11 +6,14 @@ from rest_framework.authtoken.models import Token
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'bio', 'profile_picture']
+        fields = ['username', 'email', 'bio', 'profile_picture', 'token']
         extra_kwargs = {'password': {'write_only': True}}
 
         def create(self, validated_data):
-            return get_user_model().objects.create_user(**validated_data)
+            user = get_user_model().objects.create_user(**validated_data)
+            token = Token.objects.create(user=user)
+            user.token = token.key
+            return user
         
 class LoginSerializers(serializers.ModelSerializer):
     username = serializers.CharField()
