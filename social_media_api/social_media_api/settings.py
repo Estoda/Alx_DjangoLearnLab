@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'accounts.apps.AccountsConfig',
+    'posts.apps.PostsConfig'
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
