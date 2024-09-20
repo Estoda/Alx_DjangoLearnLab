@@ -3,6 +3,16 @@ from .models import CustomUser
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework.authtoken.models import Token
 
+class UserSerializer(serializers.ModelSerializer):
+    followers_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CustomUser
+        fields = '__all__'
+
+    def get_followers_count(self, obj):
+        return obj.followers.count()
+
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()

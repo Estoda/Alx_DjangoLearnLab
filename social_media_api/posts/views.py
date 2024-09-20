@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, generics
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 
@@ -20,6 +20,15 @@ class CommentVeiwSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+class UserFeedView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        followed_users = user.following.all()
+        return Post.objects.filter(author_in=followed_users).order_by('-created_at')
 
 
 
