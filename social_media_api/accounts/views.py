@@ -25,7 +25,7 @@ class LoginView(ObtainAuthToken):
 from rest_framework.permissions import IsAuthenticated
 
 class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         serializer = ProfileSerializer(request.user)
@@ -40,7 +40,7 @@ class ProfileView(APIView):
 
 
 class FollowUser(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
         try:
@@ -54,7 +54,7 @@ class FollowUser(generics.GenericAPIView):
 
         
 class UnfollowUser(APIView):
-    permission_classes = [psermissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, user_id):
         try:
