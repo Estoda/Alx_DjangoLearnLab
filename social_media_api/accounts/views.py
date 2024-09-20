@@ -39,7 +39,7 @@ class ProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class FollowUser(APIView):
+class FollowUser(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
@@ -47,10 +47,11 @@ class FollowUser(APIView):
             user_to_follow = CustomUser.objects.get(id=user_id)
             if request.user != user_to_follow:
                 request.user.following.add(user_to_follow)
-                return Response({'message': 'User followed Successfully!'}, status=status.HTTP_200_OK)
-            return Response({'error': 'You cannot follow yourself.'}, status=status.HTTP_404_NOT_FOUND)
+                return Response({'message': 'User followed successfully!'}, status=status.HTTP_200_OK)
+            return Response({'error': 'You cannot follow yourself.'}, status=status.HTTP_400_BAD_REQUEST)
         except CustomUser.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'User not found.'}, status=status.HTTP_404_NOT_FOUND)
+
         
 class UnfollowUser(APIView):
     permission_classes = [IsAuthenticated]
