@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
 from .models import CustomUser
 from .serializers import RegisterSerializer, LoginSerializers, ProfileSerializer
 from rest_framework.authtoken.views import ObtainAuthToken, APIView
@@ -54,7 +54,7 @@ class FollowUser(generics.GenericAPIView):
 
         
 class UnfollowUser(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [psermissions.IsAuthenticated]
 
     def post(self, request, user_id):
         try:
