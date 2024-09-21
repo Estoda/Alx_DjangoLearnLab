@@ -39,7 +39,7 @@ class LikedPostView(generics.GenericAPIView):
         post = generics.get_object_or_404(Post, pk=pk)
         user = request.user
 
-        like, created = Like.objects.get_or_create(user=user, post=post)
+        like, created = Like.objects.get_or_create(user=request.user, post=post)
         if Like.objects.filter(post=post, user = user).exists():
             return Response({'message': 'Already liked'}, status=status.HTTP_400_BAD_REQUEST)
         
