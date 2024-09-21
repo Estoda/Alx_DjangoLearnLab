@@ -3,7 +3,7 @@ from rest_framework import viewsets, permissions, filters, generics, status
 from rest_framework.response import Response
 from .models import Post, Comment, Like
 from .serializers import PostSerializer, CommentSerializer
-from notifications.models import Notifications
+from notifications.models import Notification
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -44,7 +44,7 @@ class LikedPostView(generics.GenericAPIView):
         
         Like.objects.create(post=post, user=user)
 
-        Notifications.objects.create(recipient=post.author, actor=user, verb='liked you post', target=post)
+        Notification.objects.create(recipient=post.author, actor=user, verb='liked you post', target=post)
         return Response({'message': 'Post liked'}, status=status.HTTP_201_CREATED)
 
 class UnlikePostView(generics.GenericAPIView):
