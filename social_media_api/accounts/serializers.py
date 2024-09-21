@@ -14,15 +14,13 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.followers.count()
 
 class RegisterSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(read_only=True)
     class Meta:
         model = get_user_model()
         fields = ['username', 'email', 'bio', 'profile_picture', 'token']
-        extra_kwargs = {'password': {'write_only': True}}
 
         def create(self, validated_data):
             user = get_user_model().objects.create_user(**validated_data)
-            token = Token.objects.create(user=user)
-            user.token = token.key
             return user
         
 class LoginSerializers(serializers.ModelSerializer):

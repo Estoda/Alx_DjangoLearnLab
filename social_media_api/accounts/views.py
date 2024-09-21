@@ -15,11 +15,9 @@ class LoginView(ObtainAuthToken):
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-           user = self.serializer.validated_data['user']
-           token, _= Token.objects.get_or_create(user=user)
-           return Response({"token": token.key}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, _=Token.objects.get_or_create(user=user)
 
 
 from rest_framework.permissions import IsAuthenticated
